@@ -8,7 +8,9 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+
+import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,15 +32,22 @@ public class Book {
     private Date publishedDate;
     private String photo;
 
-   /* this code is for many to many mapping to Author entity
-    book entity is inverse table*/
 
-    @ManyToMany(mappedBy = "book", fetch = FetchType.LAZY)
-    private Set<Author> author;
+    //step-1
+    @ManyToMany
+    @JoinTable(
+            //this will make a new database table by adding both table primary key
+            name = "tbl_book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authorSet = new HashSet<>();
 
-    @OneToMany(targetEntity = BookTransaction.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "bookId",referencedColumnName = "id")
-    private List<BookTransaction> bookTransaction;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoryID",referencedColumnName = "id")
+    private Category category;
 
-
+    public void addAuthorToBook(Author author) {
+        authorSet.add(author);
+    }
 }

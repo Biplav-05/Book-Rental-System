@@ -1,12 +1,15 @@
 package com.example.bookkeepingsys.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +25,9 @@ public class Category {
     private String name;
     private String description;
 
-    @OneToMany(targetEntity = Book.class,cascade = CascadeType.ALL)
-    @JoinColumn(name="categoryId",referencedColumnName = "id")
-    private List<Book> book;
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
+    private Set<Book> books = new HashSet<>();
+
+
 }

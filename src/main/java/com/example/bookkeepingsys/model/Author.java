@@ -1,12 +1,15 @@
 package com.example.bookkeepingsys.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,15 +25,10 @@ public class Author {
     private String name;
     private String email;
     private String mobileNumber;
-    /*for many to many mapping to the Book entity
-    Author table is origin table and Book is inverse table*/
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "tbl_book_author", joinColumns = {
-            @JoinColumn(name = "authorId", referencedColumnName = "id")
 
-    }
-            , inverseJoinColumns = {
-            @JoinColumn(name = "bookId", referencedColumnName = "id")
-    })
-    private List<Book> book;
+    //step-2
+    @JsonIgnore
+    @ManyToMany(mappedBy = "authorSet")
+    private Set<Book> book = new HashSet<>();
+
 }
