@@ -6,16 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookPojo {
-    private Integer id;
-    private String name;
+public class BookAuthorCategory {
+    private Integer bookId;
+    private String bookName;
     private String isbn;
+    private String authorName;
     private double rating;
     private Integer stockCount;
     private Date publishedDate;
     private String photo;
+    private String category;
+
 }

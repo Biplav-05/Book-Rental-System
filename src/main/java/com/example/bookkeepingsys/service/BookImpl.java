@@ -1,16 +1,17 @@
 package com.example.bookkeepingsys.service;
 
 import com.example.bookkeepingsys.converter.BookConverter;
+import com.example.bookkeepingsys.mapper.BookMapper;
 import com.example.bookkeepingsys.misc.ApiResponse;
 import com.example.bookkeepingsys.model.Author;
 import com.example.bookkeepingsys.model.Book;
+import com.example.bookkeepingsys.model.Category;
 import com.example.bookkeepingsys.pojo.BookPojo;
 import com.example.bookkeepingsys.repository.AuthorRepository;
 import com.example.bookkeepingsys.repository.BookRepository;
+import com.example.bookkeepingsys.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,18 +20,23 @@ public class BookImpl extends ApiResponse implements BookService{
     private BookConverter bookConverter;
 
     private AuthorRepository authorRepository;
+   private BookMapper bookMapper;
+    private CategoryRepository categoryRepository;
 
-    public BookImpl(BookRepository bookRepository, BookConverter bookConverter, AuthorRepository authorRepository) {
+    public BookImpl(BookRepository bookRepository, BookConverter bookConverter, AuthorRepository authorRepository, BookMapper bookMapper, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.bookConverter = bookConverter;
         this.authorRepository = authorRepository;
+        this.bookMapper = bookMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public ApiResponse getAllBooks() {
-//        List<Book> books = bookRepository.findAll();
-//        List<BookPojo> bookPojoList = bookConverter.bookEntityToPojoList(books);
-        return success("All the books are",bookRepository.findAll());
+
+        //return success("All the books are",bookRepository.findAll());
+        return success("Book details ",bookMapper.allDetails());
+
     }
 
     @Override
@@ -63,5 +69,36 @@ public class BookImpl extends ApiResponse implements BookService{
 
 
 
+    }
+
+    @Override
+    public ApiResponse addCategoryToBook(Integer bookId, Integer categoryId) {
+
+        Optional<Book> book = bookRepository.findById(bookId);
+        Optional<Category> category = categoryRepository.findById(categoryId);
+
+
+        if(bookId!=null && categoryId!=null)
+        {
+            if (book.isPresent() && category.isPresent())
+            {
+                Book book1 = bookRepository.findById(bookId).get();
+                Category category1 = categoryRepository.findById(categoryId).get();
+                book1.assignCategory(category1);
+                bookRepository.save(book1);
+                return  success("Category : "+category1.getName()+" is assign to book :s"+book1.getName(),null);
+
+            }
+            return error("bookId or categoryId is not present in db",null);
+        }
+        return error("bookId  or categoryId is null",null);
+
+
+
+    }
+
+    @Override
+    public ApiResponse getAllBookWhithoutJoin() {
+        return success("All Books Whithout Join",bookRepository.findAll());
     }
 }

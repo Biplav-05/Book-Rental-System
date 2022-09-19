@@ -5,13 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -38,16 +36,21 @@ public class Book {
     @JoinTable(
             //this will make a new database table by adding both table primary key
             name = "tbl_book_author",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
+            joinColumns = @JoinColumn(name = "book_id",foreignKey = @ForeignKey(name = "fk_book_id")),
+            inverseJoinColumns = @JoinColumn(name = "author_id",foreignKey = @ForeignKey(name = "fk_author_id"))
     )
     private Set<Author> authorSet = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoryID",referencedColumnName = "id")
+    @JoinColumn(name = "categoryID",referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_category_id"))
     private Category category;
 
     public void addAuthorToBook(Author author) {
         authorSet.add(author);
+    }
+
+    public void assignCategory(Category category1) {
+        this.category=category1;
     }
 }

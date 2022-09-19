@@ -6,6 +6,7 @@ import com.example.bookkeepingsys.pojo.AuthorPojo;
 import com.example.bookkeepingsys.service.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class AuthorController extends ApiResponse {
     }
 
     @PostMapping("addAuthor")
-    public ApiResponse addAuthor(@RequestBody AuthorPojo authorPojo)
+    public ApiResponse addAuthor(@RequestBody @Valid AuthorPojo authorPojo)
     {
         return authorService.addAuthor(authorPojo);
 

@@ -12,4 +12,8 @@ public interface BookService {
     ApiResponse addBook(BookPojo bookPojo);
 
     ApiResponse bookToAuthor(Integer bookId, Integer authorId);
+
+    ApiResponse addCategoryToBook(Integer bookId, Integer categoryId);
+
+    ApiResponse getAllBookWhithoutJoin();
 }

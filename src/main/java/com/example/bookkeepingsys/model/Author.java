@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_author")
+@Table(name = "tbl_author",uniqueConstraints = {@UniqueConstraint( name = "unique_email",columnNames = "email")})
 public class Author {
     @Id
     @SequenceGenerator(sequenceName = "tbl_author_seq_gen", name = "tbl_author_seq", allocationSize = 1)
