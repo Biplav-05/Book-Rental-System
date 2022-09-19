@@ -19,13 +19,16 @@ public class ApplicationExceptionHandler extends ApiResponse {
     public ApiResponse handleValidationException(MethodArgumentNotValidException ex)
     {
         List<String> error = new ArrayList<>();
+         String errorMessage="";
         for(FieldError e : ex.getBindingResult().getFieldErrors())
         {
             error.add(e.getDefaultMessage());
+            errorMessage += e.getDefaultMessage()+" ";
+
 //            "Column : "+e.getField() +" => "
         }
-        ApiResponse apiResponse = new ApiResponse();
-       return apiResponse.exception("validation exception",error);
+
+       return error(errorMessage,null);
     }
     @ExceptionHandler({ConstraintViolationException.class})
     public ApiResponse handleConstraintViolationException(ConstraintViolationException ex)
@@ -35,6 +38,11 @@ public class ApplicationExceptionHandler extends ApiResponse {
             String uniqueColumn = ex.getConstraintName().replace("unique_", " ");
             return error(uniqueColumn+" already exist",null);
         }
+        return error(ex.getMessage(),null);
+    }
+    @ExceptionHandler({Exception.class})
+    public ApiResponse handleParentEcception(Exception ex)
+    {
         return error(ex.getMessage(),null);
     }
 }

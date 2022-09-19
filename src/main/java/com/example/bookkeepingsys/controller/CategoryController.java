@@ -5,6 +5,8 @@ import com.example.bookkeepingsys.pojo.CategoryPojo;
 import com.example.bookkeepingsys.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("category/")
 public class CategoryController extends ApiResponse {
@@ -22,7 +24,7 @@ public class CategoryController extends ApiResponse {
 
     //save Category
     @PostMapping("saveAndUpdateCategory")
-    public ApiResponse saveAndUpdate(@RequestBody CategoryPojo categoryPojo)
+    public ApiResponse saveAndUpdate(@RequestBody @Valid CategoryPojo categoryPojo)
     {
         return categoryService.saveAndUpdate(categoryPojo);
     }

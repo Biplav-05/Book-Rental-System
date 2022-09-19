@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tbl_category")
+@Table(name = "tbl_category",uniqueConstraints = {@UniqueConstraint(name = "unique_name",columnNames = "name")})
 public class Category {
     @Id
     @SequenceGenerator(sequenceName = "tbl_category_seq_gen",name="tbl_category_seq",allocationSize = 1)

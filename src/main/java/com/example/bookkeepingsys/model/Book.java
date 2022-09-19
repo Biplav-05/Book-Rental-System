@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tbl_book")
+@Table(name = "tbl_book",uniqueConstraints = {@UniqueConstraint(name="unique_isbn_number",columnNames = "isbn")})
 public class Book {
     @Id
     @SequenceGenerator(sequenceName = "book_seq_gen", name = "book_seq", allocationSize = 1)

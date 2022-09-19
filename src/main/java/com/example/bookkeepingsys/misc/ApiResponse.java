@@ -13,7 +13,7 @@ public class ApiResponse {
     private Integer status;
     private String message;
     private Object data;
-    private List<String> error=null;
+
 
 
     public ApiResponse success(String message, Object data) {
@@ -26,20 +26,13 @@ public class ApiResponse {
     }
 
     public ApiResponse error(String message, Object data) {
-        ApiResponse apiResponse = ApiResponse.builder()
+        ApiResponse apiResponse1 = ApiResponse.builder()
                 .message(message)
                 .data(data)
                 .status(0)
                 .build();
-        return apiResponse;
+        return apiResponse1;
     }
-    public ApiResponse exception( String message,List<String>error) {
-        ApiResponse apiResponse = ApiResponse.builder()
-                .message(message)
-                .error(error)
-                .status(0)
-                .build();
-        return apiResponse;
-    }
+
 
 }

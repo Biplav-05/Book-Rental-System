@@ -60,7 +60,7 @@ public class BookImpl extends ApiResponse implements BookService{
 
                 book.addAuthorToBook(author);
                 bookRepository.save(book);
-                return success("author is added to book",null);
+                return success(author.getName()+"  is added to book "+book.getName(),null);
             }
             return error("bbokID or author id is not present..",null);
 
@@ -86,7 +86,7 @@ public class BookImpl extends ApiResponse implements BookService{
                 Category category1 = categoryRepository.findById(categoryId).get();
                 book1.assignCategory(category1);
                 bookRepository.save(book1);
-                return  success("Category : "+category1.getName()+" is assign to book :s"+book1.getName(),null);
+                return  success("Category : "+category1.getName()+" is assign to book :"+book1.getName(),null);
 
             }
             return error("bookId or categoryId is not present in db",null);

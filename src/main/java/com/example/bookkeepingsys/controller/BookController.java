@@ -6,6 +6,7 @@ import com.example.bookkeepingsys.pojo.BookPojo;
 import com.example.bookkeepingsys.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class BookController extends ApiResponse {
         return bookService.getAllBookWhithoutJoin();
     }
     @PutMapping("addBook")
-    public ApiResponse addBook(@RequestBody BookPojo  bookPojo)
+    public ApiResponse addBook(@RequestBody @Valid BookPojo  bookPojo)
     {
         return bookService.addBook(bookPojo);
     }
