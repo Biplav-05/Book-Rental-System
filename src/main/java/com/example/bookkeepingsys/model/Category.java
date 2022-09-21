@@ -28,6 +28,4 @@ public class Category {
     @JsonIgnore
     @OneToMany(mappedBy = "category")
     private Set<Book> books = new HashSet<>();
-
-
 }

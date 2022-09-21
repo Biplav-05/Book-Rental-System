@@ -50,5 +50,10 @@ public class BookController extends ApiResponse {
     {
         return bookService.addCategoryToBook(bookId,categoryId);
     }
+    @GetMapping("find-book-only")
+    public ApiResponse findBookOnly()
+    {
+        return bookService.findBookOnly();
+    }
 
 }

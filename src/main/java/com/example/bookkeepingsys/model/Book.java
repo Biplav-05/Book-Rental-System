@@ -1,17 +1,14 @@
 package com.example.bookkeepingsys.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
-
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -26,13 +23,14 @@ public class Book {
     private Integer id;
     private String name;
     private String isbn;
-    private double rating;
+    private Double rating;
     private Integer stockCount;
     private Date publishedDate;
     private String photo;
 
 
     //step-1
+
     @ManyToMany
     @JoinTable(
             //this will make a new database table by adding both table primary key
@@ -40,15 +38,20 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id",foreignKey = @ForeignKey(name = "fk_book_id")),
             inverseJoinColumns = @JoinColumn(name = "author_id",foreignKey = @ForeignKey(name = "fk_author_id"))
     )
-    private Set<Author> authorSet = new HashSet<>();
+    private List<Author> authorSet = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "categoryID",referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_category_id"))
     private Category category;
 
+    @JsonIgnore
+        @OneToMany(mappedBy = "book")
+        private List<BookTransaction> bookTransactions;
+
     public void addAuthorToBook(Author author) {
-        authorSet.add(author);
+
+        authorSet.add((Author) author);
     }
 
     public void assignCategory(Category category1) {

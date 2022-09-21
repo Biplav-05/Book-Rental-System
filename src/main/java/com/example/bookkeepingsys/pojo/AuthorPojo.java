@@ -20,6 +20,7 @@ public class AuthorPojo {
     private String name;
     @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",message = "please enter valid email..")
     private String email;
-    @Pattern(regexp ="^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$",message = "Enter valid mobile number")
+    @Pattern(regexp ="^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$",
+            message = "Enter valid mobile number")
     private String mobileNumber;
 }

@@ -1,6 +1,8 @@
 package com.example.bookkeepingsys.model;
 
+import org.modelmapper.internal.bytebuddy.pool.TypePool;
+
 public enum RentStatus {
-    AVAILABLE,
-    UNAVAILABLE;
+    Rent_Book,
+    Return_Book;
 }

@@ -1,0 +1,26 @@
+package com.example.bookkeepingsys.pojo;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class MemberPojo {
+    private Integer id;
+    @NotBlank(message = "Member name cannot be blank")
+    private String name;
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",message = "please enter valid email..")
+    private String email;
+    @Pattern(regexp ="^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$",
+            message = "Enter valid mobile number")
+    private String phoneNumber;
+    @NotBlank(message = "Address cannot be blank")
+    private String address;
+}

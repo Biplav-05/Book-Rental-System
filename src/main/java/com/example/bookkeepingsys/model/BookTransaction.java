@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,7 +22,15 @@ public class BookTransaction {
     private Integer id;
     private Date fromDate;
     private Date toDate;
+    @Enumerated(EnumType.STRING)
     private RentStatus rentStatus;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "memberId",referencedColumnName = "id",foreignKey = @ForeignKey(name = "fk_member_id"))
+    private Member member;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "bookId",referencedColumnName = "id",foreignKey = @ForeignKey(name = "fk_book_id"))
+    private Book book;
 
 
 }

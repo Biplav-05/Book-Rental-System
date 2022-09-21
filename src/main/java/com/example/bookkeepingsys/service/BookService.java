@@ -4,6 +4,8 @@ import com.example.bookkeepingsys.misc.ApiResponse;
 import com.example.bookkeepingsys.pojo.BookPojo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface BookService {
     ApiResponse getAllBooks();
@@ -16,4 +18,6 @@ public interface BookService {
     ApiResponse addCategoryToBook(Integer bookId, Integer categoryId);
 
     ApiResponse getAllBookWhithoutJoin();
+
+    ApiResponse findBookOnly();
 }
