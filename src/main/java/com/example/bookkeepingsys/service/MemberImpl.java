@@ -8,6 +8,8 @@ import com.example.bookkeepingsys.pojo.MemberPojo;
 import com.example.bookkeepingsys.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MemberImpl extends ApiResponse implements MemberService{
 
@@ -25,7 +27,12 @@ public class MemberImpl extends ApiResponse implements MemberService{
     public ApiResponse insertMember(MemberPojo memberPojo) {
         Member member = memberConverter.pojoToEntity(memberPojo);
         member=memberRepository.save(member);
-        return success(member.getName()+" is  added as library member",null);
+        Optional<MemberPojo> memberEmail = memberMapper.checkEmail(memberPojo.getEmail());
+        if(!memberEmail.isPresent()){
+            return success(member.getName()+" is  added as library member",null);
+        }
+        return error(memberPojo.getEmail()+" email is already exists",null);
+
     }
 
     @Override

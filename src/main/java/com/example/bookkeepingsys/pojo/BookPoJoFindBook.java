@@ -15,6 +15,6 @@ public class BookPoJoFindBook {
     private String isbn;
     private String photo;
     private String published_date;
-    private String Stock;
+    private Integer Stock;
     private String rating;
 }

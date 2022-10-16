@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,14 +23,13 @@ public class BookPojo {
     private Double rating;
     @NotNull(message = "stock count cannot be null")
     private Integer stockCount;
-
-
     @NotNull(message = "category ID cannot be null")
     private Integer categoryId;
-
     @NotNull(message = "date cannot be null")
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date publishedDate;
     @NotNull(message = "photo cannot be null")
     private String photo;
+
+    private List<Integer> authorId;
 }

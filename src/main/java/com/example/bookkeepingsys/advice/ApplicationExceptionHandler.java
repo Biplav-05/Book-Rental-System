@@ -46,7 +46,7 @@ public class ApplicationExceptionHandler extends ApiResponse {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ApiResponse httpMessageNotReadAbleExceptin(HttpMessageNotReadableException ex)
     {
-        return error("Invalid format of date",null);
+        return error(ex.getMessage(),null);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

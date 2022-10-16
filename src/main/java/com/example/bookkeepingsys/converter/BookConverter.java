@@ -2,6 +2,7 @@ package com.example.bookkeepingsys.converter;
 
 import com.example.bookkeepingsys.model.Book;
 import com.example.bookkeepingsys.pojo.BookPojo;
+import com.example.bookkeepingsys.pojo.ListAllAuthorBookCategory;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,9 @@ public class BookConverter {
     public List<BookPojo> bookEntityToPojoList(List<Book> book)
     {
         return book.stream().map(bookList->modelMapper.map(book,BookPojo.class)).collect(Collectors.toList());
+    }
+    public List<ListAllAuthorBookCategory> listAllAuthorBookCategories (List<Book> books)
+    {
+        return  books.stream().map(a->modelMapper.map(books,ListAllAuthorBookCategory.class)).collect(Collectors.toList());
     }
 }

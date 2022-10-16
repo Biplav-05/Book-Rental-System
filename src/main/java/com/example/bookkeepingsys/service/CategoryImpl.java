@@ -6,13 +6,14 @@ import com.example.bookkeepingsys.misc.ApiResponse;
 import com.example.bookkeepingsys.model.Category;
 import com.example.bookkeepingsys.pojo.CategoryPojo;
 import com.example.bookkeepingsys.repository.CategoryRepository;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class CategoryImpl extends ApiResponse implements CategoryService{
+public class CategoryImpl extends ApiResponse implements CategoryService {
     private final CategoryRepository categoryRepository;
-    private  final CategoryMapper categoryMapper;
+    private final CategoryMapper categoryMapper;
     private CategoryConverter categoryConverter;
 
 
@@ -30,7 +31,15 @@ public class CategoryImpl extends ApiResponse implements CategoryService{
     @Override
     public ApiResponse saveAndUpdate(CategoryPojo categoryPojo) {
         Category category = categoryConverter.pojoToEnity(categoryPojo);
-        category=categoryRepository.save(category);
-        return success("Category inserted",null);
+
+
+        Optional<Category> categoryStatus = categoryRepository.checkStatus(categoryPojo.getName());
+        if (!categoryStatus.isPresent()) {
+            category = categoryRepository.save(category);
+            return success("Category inserted", null);
+        }
+        return error("Category Name : " + categoryPojo.getName() + " already exist ", null);
+
+
     }
 }

@@ -14,4 +14,10 @@ public interface AuthorRepository extends JpaRepository<Author,Integer> {
     Optional<Author> findSpecificAuthor(Integer authorId);
 @Query(value = "select * from tbl_author where id=?1",nativeQuery = true)
     Optional<Author> getAuthor(Integer authorId);
+
+@Query(value = "select * from tbl_author where id=?1",nativeQuery = true)
+    Optional<Author> findAuthor(List<Integer> authorId);
+
+@Query(value = "select * from tbl_author where id=?1",nativeQuery = true)
+List<Author> findAuthorOnly(List<Integer> authorId);
 }
